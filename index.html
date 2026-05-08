@@ -8,66 +8,31 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: Georgia, 'Times New Roman', serif;
-      background: #f9f6f0;
-      color: #2c1810;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: #f9f6f0; color: #2c1810;
+      min-height: 100vh; display: flex;
+      flex-direction: column; align-items: center;
       padding: 18px 18px 28px;
     }
     .cross { font-size: 38px; color: #8b0000; margin-bottom: 4px; }
-    .blessing {
-      font-size: 20px; color: #5a3a1a; font-style: italic;
-      margin-bottom: 3px;
-    }
-    .sub {
-      font-size: 15px; color: #7a5a3a; text-align: center;
-      margin-bottom: 22px; line-height: 1.5;
-    }
+    .blessing { font-size: 20px; color: #5a3a1a; font-style: italic; margin-bottom: 3px; }
+    .sub { font-size: 15px; color: #7a5a3a; text-align: center; margin-bottom: 22px; line-height: 1.5; }
     #btn {
-      background: #8b0000; color: #fff;
-      border: none; border-radius: 14px;
-      font-size: 22px; font-family: Georgia, serif;
-      padding: 20px 40px; cursor: pointer;
-      width: 100%; max-width: 340px;
+      background: #8b0000; color: #fff; border: none; border-radius: 14px;
+      font-size: 22px; font-family: Georgia, serif; padding: 20px 40px;
+      cursor: pointer; width: 100%; max-width: 340px;
       -webkit-tap-highlight-color: transparent;
     }
     #btn:disabled { background: #b08060; cursor: default; }
-    #status {
-      margin-top: 12px; min-height: 20px;
-      font-size: 16px; color: #5a3a1a;
-      text-align: center; line-height: 1.5;
-    }
-    .card {
-      margin-top: 28px; max-width: 400px; width: 100%;
-      background: #fff; border: 1px solid #d4c4a8;
-      border-radius: 12px; padding: 16px 16px;
-    }
-    .card h2 {
-      font-size: 16px; text-align: center; color: #2c1810;
-      border-bottom: 1px solid #d4c4a8;
-      padding-bottom: 10px; margin-bottom: 14px;
-    }
+    #status { margin-top: 12px; min-height: 20px; font-size: 16px; color: #5a3a1a; text-align: center; line-height: 1.5; }
+    .card { margin-top: 28px; max-width: 400px; width: 100%; background: #fff; border: 1px solid #d4c4a8; border-radius: 12px; padding: 16px; }
+    .card h2 { font-size: 16px; text-align: center; color: #2c1810; border-bottom: 1px solid #d4c4a8; padding-bottom: 10px; margin-bottom: 14px; }
     .step { display: flex; margin-bottom: 12px; align-items: flex-start; }
-    .num {
-      flex-shrink: 0;
-      background: #8b0000; color: #fff; border-radius: 50%;
-      width: 24px; height: 24px; line-height: 24px;
-      text-align: center; font-size: 13px;
-      margin-right: 9px; margin-top: 1px;
-    }
+    .num { flex-shrink: 0; background: #8b0000; color: #fff; border-radius: 50%; width: 24px; height: 24px; line-height: 24px; text-align: center; font-size: 13px; margin-right: 9px; margin-top: 1px; }
     .txt { font-size: 15px; line-height: 1.5; color: #2c1810; }
-    .note {
-      margin-top: 14px; padding-top: 12px;
-      border-top: 1px solid #d4c4a8;
-      font-size: 14px; color: #7a5a3a;
-      line-height: 1.5; text-align: center;
-    }
+    .note { margin-top: 14px; padding-top: 12px; border-top: 1px solid #d4c4a8; font-size: 14px; color: #7a5a3a; line-height: 1.5; text-align: center; }
   </style>
 </head>
 <body>
-
   <div class="cross">&#10013;</div>
   <div class="blessing">С Богом!</div>
   <div class="sub">Нажмите кнопку — подключение<br>настроится само</div>
@@ -77,63 +42,23 @@
 
   <div class="card">
     <h2>Что делать после нажатия кнопки</h2>
-
-    <div class="step">
-      <div class="num">1</div>
-      <div class="txt">Через несколько секунд на экране появится
-        сообщение об открытии настроек. Нужно <b>разрешить</b>.</div>
-    </div>
-    <div class="step">
-      <div class="num">2</div>
-      <div class="txt">Будут появляться запросы об установке профиля.
-        Нужно три раза нажать <b>«Установить»</b>, потом <b>«Готово»</b>.</div>
-    </div>
-    <div class="step">
-      <div class="num">3</div>
-      <div class="txt">Нажмите круглую физическую кнопку под экраном,
-        чтобы выйти на рабочий стол.</div>
-    </div>
-    <div class="step">
-      <div class="num">4</div>
-      <div class="txt">Найдите на рабочем столе серую иконку с шестерёнкой —
-        это <b>Настройки</b>. Нажмите на неё.</div>
-    </div>
-    <div class="step">
-      <div class="num">5</div>
-      <div class="txt">В меню Настроек найдите пункт <b>«VPN»</b>
-        и сдвиньте его переключатель, чтобы он стал <b>зелёным</b>.</div>
-    </div>
-    <div class="step">
-      <div class="num">6</div>
-      <div class="txt">VPN подключится за несколько секунд. Теперь можно,
-        с Божьей помощью, открывать сайты, куда раньше не пускало.
-        Но может работать медленно.</div>
-    </div>
-    <div class="step">
-      <div class="num">7</div>
-      <div class="txt">Если работает слишком медленно — можно повторить
-        процедуру, но <b>не ранее чем через пять минут</b>.
-        Иногда помогает.</div>
-    </div>
-    <div class="step">
-      <div class="num">8</div>
-      <div class="txt">Если VPN найти не удалось — система об этом сообщит.
-        Новый поиск лучше производить не сразу.</div>
-    </div>
-    <div class="step">
-      <div class="num">9</div>
-      <div class="txt">Для быстрого вызова этой страницы используйте иконку
-        <b>«Настройки VPN»</b> на рабочем столе.</div>
-    </div>
-
+    <div class="step"><div class="num">1</div><div class="txt">Через несколько секунд на экране появится сообщение об открытии настроек. Нужно <b>разрешить</b>.</div></div>
+    <div class="step"><div class="num">2</div><div class="txt">Будут появляться запросы об установке профиля. Нужно три раза нажать <b>«Установить»</b>, потом <b>«Готово»</b>.</div></div>
+    <div class="step"><div class="num">3</div><div class="txt">Нажмите круглую физическую кнопку под экраном, чтобы выйти на рабочий стол.</div></div>
+    <div class="step"><div class="num">4</div><div class="txt">Найдите на рабочем столе серую иконку с шестерёнкой — это <b>Настройки</b>. Нажмите на неё.</div></div>
+    <div class="step"><div class="num">5</div><div class="txt">В меню Настроек найдите пункт <b>«VPN»</b> и сдвиньте его переключатель, чтобы он стал <b>зелёным</b>.</div></div>
+    <div class="step"><div class="num">6</div><div class="txt">VPN подключится за несколько секунд. Теперь можно, с Божьей помощью, открывать сайты, куда раньше не пускало. Но может работать медленно.</div></div>
+    <div class="step"><div class="num">7</div><div class="txt">Если работает слишком медленно — можно повторить процедуру, но <b>не ранее чем через пять минут</b>. Иногда помогает.</div></div>
+    <div class="step"><div class="num">8</div><div class="txt">Если VPN найти не удалось — система об этом сообщит. Новый поиск лучше производить не сразу.</div></div>
+    <div class="step"><div class="num">9</div><div class="txt">Для быстрого вызова этой страницы используйте иконку <b>«Настройки VPN»</b> на рабочем столе.</div></div>
+    <div class="note">Если VPN через некоторое время перестал работать — просто нажмите кнопку снова, система сама найдёт другой сервер.</div>
   </div>
 
-
   <script>
-    // !! Сюда вставить URL воркера после деплоя на Cloudflare !!
-    var WORKER_URL = 'https://vpn4ios.gsm1965.workers.dev';
-
-    var MESSAGES = [
+    var WORKER_URL  = 'https://vpn4ios.gsm1965.workers.dev';
+    var FIFO_KEY    = 'vpn_excluded';
+    var FIFO_MAX    = 5;
+    var MESSAGES    = [
       'Ищем подходящий сервер\u2026',
       'Проверяем соединение\u2026',
       'Выбираем лучший вариант\u2026',
@@ -146,68 +71,75 @@
     var resetTimer = null;
     var msgIdx     = 0;
 
+    // FIFO-очередь исключённых IP (хранится в localStorage)
+    function loadExcluded() {
+      try { return JSON.parse(localStorage.getItem(FIFO_KEY) || '[]'); } catch(e) { return []; }
+    }
+    function saveExcluded(arr) {
+      try { localStorage.setItem(FIFO_KEY, JSON.stringify(arr)); } catch(e) {}
+    }
+    function pushExcluded(ip) {
+      var arr = loadExcluded();
+      arr = arr.filter(function(x) { return x !== ip; }); // убираем дубль
+      arr.push(ip);
+      if (arr.length > FIFO_MAX) arr = arr.slice(arr.length - FIFO_MAX); // оставляем последние 5
+      saveExcluded(arr);
+    }
+
     function startMessages() {
-      msgIdx = 0;
-      status.textContent = MESSAGES[0];
+      msgIdx = 0; status.textContent = MESSAGES[0];
       msgTimer = setInterval(function() {
         msgIdx = (msgIdx + 1) % MESSAGES.length;
         status.textContent = MESSAGES[msgIdx];
       }, 2800);
     }
-
-    function stopMessages() {
-      if (msgTimer) { clearInterval(msgTimer); msgTimer = null; }
-    }
-
+    function stopMessages() { if (msgTimer) { clearInterval(msgTimer); msgTimer = null; } }
     function resetBtn(msg) {
       stopMessages();
       if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
-      btn.disabled = false;
-      btn.textContent = 'Подключить VPN';
+      btn.disabled = false; btn.textContent = 'Подключить VPN';
       status.textContent = msg || '';
     }
 
     function getVPN() {
       if (btn.disabled) return;
-      btn.disabled = true;
-      btn.textContent = 'Подбираем сервер\u2026';
+      btn.disabled = true; btn.textContent = 'Подбираем сервер\u2026';
       startMessages();
 
       resetTimer = setTimeout(function() {
         resetBtn('Если ничего не открылось \u2014 нажмите кнопку ещё раз');
       }, 15000);
 
+      // Строим URL с исключёнными IP
+      var excluded = loadExcluded();
+      var url = WORKER_URL;
+      if (excluded.length > 0) url += '?exclude=' + excluded.join(',');
+
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', WORKER_URL, true);
+      xhr.open('GET', url, true);
       xhr.responseType = 'blob';
       xhr.timeout = 35000;
 
       xhr.onload = function() {
         clearTimeout(resetTimer);
         if (xhr.status === 200) {
-          var url = URL.createObjectURL(xhr.response);
+          // Запоминаем IP в FIFO
+          var serverIP = xhr.getResponseHeader('X-Server-IP');
+          if (serverIP) pushExcluded(serverIP);
+
+          var blobUrl = URL.createObjectURL(xhr.response);
           stopMessages();
           status.textContent = 'Готово! Следуйте инструкции ниже \u2193';
-          window.location.href = url;
+          window.location.href = blobUrl;
           setTimeout(function() {
-            btn.disabled = false;
-            btn.textContent = 'Подключить VPN';
+            btn.disabled = false; btn.textContent = 'Подключить VPN';
           }, 12000);
         } else {
           resetBtn('Не удалось найти сервер. Подождите 5 минут и попробуйте снова.');
         }
       };
-
-      xhr.onerror = function() {
-        clearTimeout(resetTimer);
-        resetBtn('Ошибка связи. Проверьте интернет и попробуйте снова.');
-      };
-
-      xhr.ontimeout = function() {
-        clearTimeout(resetTimer);
-        resetBtn('Долго нет ответа. Попробуйте снова через минуту.');
-      };
-
+      xhr.onerror   = function() { clearTimeout(resetTimer); resetBtn('Ошибка связи. Проверьте интернет и попробуйте снова.'); };
+      xhr.ontimeout = function() { clearTimeout(resetTimer); resetBtn('Долго нет ответа. Попробуйте снова через минуту.'); };
       xhr.send();
     }
   </script>

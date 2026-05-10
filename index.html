@@ -428,22 +428,6 @@ function deleteFromHistory(idx) {
   renderHistory(true);
 }
 
-//function renderHistory(show) {
-//  var container = document.getElementById('history-list');
-//  container.innerHTML = '';
-// if (!show) { return; }
-//
-//  var list = loadHistory();
-//
-//  // Закреплённый первый пункт — patriarchia.ru
-//  container.appendChild(makeHistItem(PINNED, -1));
-//
-//  for (var i = 0; i < list.length; i++) {
-//    if (list[i] === PINNED) { continue; }
-//    container.appendChild(makeHistItem(list[i], i));
-//  }
-//}
-  
 function renderHistory(show) {
   var container = document.getElementById('history-list');
   container.innerHTML = '';

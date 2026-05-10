@@ -387,7 +387,17 @@ document.getElementById('pass-input').onkeydown = function(e) {
 };
 
 // ─── История ─────────────────────────────────────────
-var PINNED = 'http://patriarchia.ru';
+var PINNED = [
+  'http://www.pravmir.ru',
+  'http://pravoslavie.ru',
+  'http://calendar.rop.ru/',
+  'https://azbyka.ru',
+  'https://www.optina.ru/',
+  'https://www.diveevo.ru/',
+  'https://molitvoslov.ru/',
+  'https://pskov-pech.ru/',
+  'https://patriarchia.ru/'
+];
 
 function loadHistory() {
   try {
@@ -420,18 +430,37 @@ function deleteFromHistory(idx) {
   renderHistory(true);
 }
 
+//function renderHistory(show) {
+//  var container = document.getElementById('history-list');
+//  container.innerHTML = '';
+// if (!show) { return; }
+//
+//  var list = loadHistory();
+//
+//  // Закреплённый первый пункт — patriarchia.ru
+//  container.appendChild(makeHistItem(PINNED, -1));
+//
+//  for (var i = 0; i < list.length; i++) {
+//    if (list[i] === PINNED) { continue; }
+//    container.appendChild(makeHistItem(list[i], i));
+//  }
+//}
+  
 function renderHistory(show) {
   var container = document.getElementById('history-list');
   container.innerHTML = '';
   if (!show) { return; }
 
   var list = loadHistory();
-
-  // Закреплённый первый пункт — patriarchia.ru
-  container.appendChild(makeHistItem(PINNED, -1));
-
+  for (var p = 0; p < PINNED.length; p++) {
+    container.appendChild(makeHistItem(PINNED[p], -1));
+  }
   for (var i = 0; i < list.length; i++) {
-    if (list[i] === PINNED) { continue; }
+    var isPinned = false;
+    for (var p = 0; p < PINNED.length; p++) {
+      if (list[i] === PINNED[p]) { isPinned = true; break; }
+    }
+    if (isPinned) { continue; }
     container.appendChild(makeHistItem(list[i], i));
   }
 }

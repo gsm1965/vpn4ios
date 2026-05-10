@@ -406,13 +406,14 @@ function loadHistory() {
 function saveHistory(list) {
   try { localStorage.setItem(HIST_KEY, JSON.stringify(list)); } catch(e) {}
 }
-
+function stripSlash(u) { return u.replace(/\/+$/, ''); }
+  
 function addToHistory(url) {
   var list = loadHistory();
   // Дедупликация
   var filtered = [];
   for (var i = 0; i < list.length; i++) {
-    if (list[i] !== url) { filtered.push(list[i]); }
+    if (stripSlash(list[i]) !== stripSlash(url)) { filtered.push(list[i]); }
   }
   filtered.unshift(url);
   saveHistory(filtered);
@@ -455,7 +456,7 @@ function renderHistory(show) {
   for (var i = 0; i < list.length; i++) {
     var isPinned = false;
     for (var p = 0; p < PINNED.length; p++) {
-      if (list[i] === PINNED[p]) { isPinned = true; break; }
+      if (stripSlash(list[i]) === stripSlash(PINNED[p])) { isPinned = true; break; }
     }
     if (isPinned) { continue; }
     container.appendChild(makeHistItem(list[i], i));
@@ -493,7 +494,7 @@ function makeHistItem(url, idx) {
 // ─── Навигация ───────────────────────────────────────
 function normalizeUrl(u) {
   u = (u || '').trim();
-  if (!u) { u = PINNED; }
+  if (!u) { u = PINNED[0]; }
   if (u.indexOf('http://') !== 0 && u.indexOf('https://') !== 0) {
     u = 'http://' + u;
   }

@@ -268,7 +268,7 @@ function showScreen(name) {
 // ─── Фон (пергамент) ─────────────────────────────────
 function loadBg() {
   var v = localStorage.getItem(BG_KEY);
-  bgIndex = (v !== null && v !== '') ? parseInt(v, 10) : -1;
+  bgIndex = (v !== null && v !== '') ? parseInt(v, 10) : 1;
   if (isNaN(bgIndex)) { bgIndex = -1; }
   applyBg();
 }

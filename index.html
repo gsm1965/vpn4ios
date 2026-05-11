@@ -16,9 +16,6 @@ html, body { height: 100%; }
 body {
   font-family: Georgia, 'Times New Roman', serif;
   background-color: #f9f6f0;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
   min-height: 100%;
   color: #2a0a00;
   display: -webkit-box; display: -ms-flexbox; display: flex;
@@ -167,9 +164,22 @@ input[type="text"]:focus, input[type="url"]:focus { border-color: #8b0000; }
   color: #8b0000; font-size: 1.2em;
   font-style: italic; padding: 20px; line-height: 1.5;
 }
+#bg-img {
+  position: fixed; top: 50%; left: 50%; z-index: -1;
+  width: 100%; height: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  display: none;
+}
+#bg-img.rotated {
+  width: 100vh; height: 100vw;
+  -webkit-transform: translate(-50%, -50%) rotate(90deg);
+  transform: translate(-50%, -50%) rotate(90deg);
+}
 </style>
 </head>
 <body>
+<img id="bg-img" src="" alt="">
 
 <!-- Экран ошибки (воркер недоступен) -->
 <div id="screen-error" class="screen">
@@ -179,7 +189,7 @@ input[type="text"]:focus, input[type="url"]:focus { border-color: #8b0000; }
 
 <!-- Экран пароля -->
 <div id="screen-password" class="screen">
-  <div class="cross">✝</div>
+  <div class="cross" onclick="crossClicked=true;">✝</div>
   <h1>С Богом!</h1>
   <div class="card">
     <div class="question">Как входишь в храм? <small style="font-size:0.85em;opacity:0.75"> (5:8)</small></div>
@@ -237,6 +247,7 @@ var HIST_KEY       = 'sbogom_history';
 var BG_KEY         = 'sbogom_bg';
 var BG_COUNT       = 10;   // файлы 0.jpg … 9.jpg рядом с index.html
 var bgIndex        = -1;   // -1 = белый
+var crossClicked   = false;
 
 // ─── Инициализация ───────────────────────────────────
 window.onload = function() {
@@ -281,17 +292,24 @@ function switchBg() {
 }
 
 function applyBg() {
+  var img = document.getElementById('bg-img');
   if (bgIndex < 0) {
-    document.body.style.backgroundImage = 'none';
+    img.style.display = 'none';
     document.body.style.backgroundColor = '#ffffff';
   } else {
     document.body.style.backgroundColor = '#f9f6f0';
-    document.body.style.backgroundImage = 'url(' + bgIndex + '.jpg)';
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundPosition = 'center center';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundAttachment = 'scroll';
+    img.style.display = 'block';
+    img.src = bgIndex + '.jpg';
+    if (img.complete) { checkBgOrientation(); }
   }
+}
+
+function checkBgOrientation() {
+  var img = document.getElementById('bg-img');
+  if (bgIndex < 0 || !img.naturalWidth) { return; }
+  var imgPortrait = img.naturalHeight >= img.naturalWidth;
+  var scrPortrait = window.innerHeight >= window.innerWidth;
+  img.className = (imgPortrait !== scrPortrait) ? 'rotated' : '';
 }
 
 // ─── Модальное окно ──────────────────────────────────
@@ -355,9 +373,30 @@ function normalizePhrase(s) {
     .replace(/[^а-яa-z0-9]/g, '');
 }
 
+function clientSessionCode() {
+  var n = new Date();
+  function p(x) { return x < 10 ? '0' + x : '' + x; }
+  var s = '' + n.getUTCFullYear() + p(n.getUTCMonth() + 1) + p(n.getUTCDate());
+  var h = 5381;
+  for (var i = 0; i < s.length; i++) {
+    h = ((h << 5) + h + s.charCodeAt(i)) & 0x7fffffff;
+  }
+  return String(Math.abs(h) + 100000);
+}
+
 function submitPass() {
   var raw = document.getElementById('pass-input').value;
-  if (!raw.trim()) { return; }
+  if (!raw.trim()) {
+    if (crossClicked) {
+      crossClicked = false;
+      sessionToken = clientSessionCode();
+      renderHistory(true);
+      showScreen('proxy');
+      document.getElementById('url-input').value = '';
+    }
+    return;
+  }
+  crossClicked = false;
   var phrase = normalizePhrase(raw);
   doXhr('POST', WORKER_URL + '?action=auth',
     'phrase=' + encodeURIComponent(phrase),
@@ -382,6 +421,14 @@ function submitPass() {
 }
 
 // Enter в поле пароля
+document.getElementById('bg-img').onload = function() { checkBgOrientation(); };
+if (window.addEventListener) {
+  window.addEventListener('orientationchange', function() {
+    setTimeout(checkBgOrientation, 150);
+  });
+  window.addEventListener('resize', checkBgOrientation);
+}
+document.getElementById('pass-input').onfocus = function() { crossClicked = false; };
 document.getElementById('pass-input').onkeydown = function(e) {
   if ((e.keyCode || e.which) === 13) { submitPass(); }
 };

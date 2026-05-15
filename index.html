@@ -24,7 +24,6 @@ body {
   -webkit-box-align: center; -ms-flex-align: center; align-items: center;
 }
 
-/* ── Экраны ── */
 .screen {
   display: none;
   -webkit-box-orient: vertical; -webkit-box-direction: normal;
@@ -43,7 +42,6 @@ body {
   padding-top: 28px;
 }
 
-/* ── Крест и заголовок ── */
 .cross {
   font-size: 2.8em; color: #8b0000;
   margin-bottom: 6px;
@@ -55,7 +53,6 @@ h1 {
   text-shadow: 0 1px 0 rgba(255,255,255,0.8);
 }
 
-/* ── Карточка ── */
 .card {
   background: rgba(249,246,240,0.94);
   border: 1px solid #c9a96e;
@@ -69,7 +66,6 @@ h1 {
   margin-bottom: 14px; font-size: 1.05em; line-height: 1.4;
 }
 
-/* ── Поля ввода ── */
 input[type="text"], input[type="url"] {
   width: 100%; padding: 10px 12px;
   font-size: 1em; font-family: Georgia, serif;
@@ -85,7 +81,6 @@ input[type="text"]:focus, input[type="url"]:focus { border-color: #8b0000; }
 }
 .input-row input { -webkit-box-flex: 1; -ms-flex: 1; flex: 1; margin-bottom: 0; }
 
-/* ── Кнопки — псевдо-3D ── */
 .btn {
   display: inline-block;
   background: -webkit-linear-gradient(top, #b00000, #700000);
@@ -104,7 +99,6 @@ input[type="text"]:focus, input[type="url"]:focus { border-color: #8b0000; }
   box-shadow: 0 1px 2px rgba(0,0,0,0.35);
 }
 
-/* ── История ── */
 #history-list {
   margin-top: 14px; text-align: left;
   max-height: 44vh; overflow-y: auto;
@@ -129,7 +123,6 @@ input[type="text"]:focus, input[type="url"]:focus { border-color: #8b0000; }
 }
 .hist-del:active { color: #8b0000; }
 
-/* ── Модальное окно ── */
 #modal-overlay {
   display: none; position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -151,7 +144,6 @@ input[type="text"]:focus, input[type="url"]:focus { border-color: #8b0000; }
   margin-bottom: 20px; line-height: 1.55; font-size: 0.98em;
 }
 
-/* ── Подвал ── */
 #footer {
   width: 100%; padding: 12px 16px 18px; text-align: center;
 }
@@ -181,13 +173,11 @@ input[type="text"]:focus, input[type="url"]:focus { border-color: #8b0000; }
 <body>
 <img id="bg-img" src="" alt="">
 
-<!-- Экран ошибки (воркер недоступен) -->
 <div id="screen-error" class="screen">
   <div class="cross">✝</div>
   <div id="err-msg">Заблокировали, ироды! 8-(</div>
 </div>
 
-<!-- Экран пароля -->
 <div id="screen-password" class="screen">
   <div class="cross" onclick="crossClicked=true;">✝</div>
   <h1>С Богом!</h1>
@@ -203,7 +193,6 @@ input[type="text"]:focus, input[type="url"]:focus { border-color: #8b0000; }
   </div>
 </div>
 
-<!-- Экран ввода адреса -->
 <div id="screen-proxy" class="screen">
   <div class="cross">✝</div>
   <h1>С Богом!</h1>
@@ -214,13 +203,12 @@ input[type="text"]:focus, input[type="url"]:focus { border-color: #8b0000; }
         placeholder="pravoslavie.ru"
         autocomplete="off" autocorrect="off"
         autocapitalize="none" spellcheck="false">
-      <button class="btn" onclick="goToUrl()">&#8594;</button>
+      <button class="btn" onclick="goToUrl(event)">&#8594;</button>
     </div>
     <div id="history-list"></div>
   </div>
 </div>
 
-<!-- Модальное окно -->
 <div id="modal-overlay">
   <div id="modal-box">
     <div id="modal-msg"></div>
@@ -228,19 +216,14 @@ input[type="text"]:focus, input[type="url"]:focus { border-color: #8b0000; }
   </div>
 </div>
 
-<!-- Подвал -->
 <div id="footer">
   <span class="flink" onclick="switchBg()">Сменить пергамент</span>
   <span class="flink" onclick="showAbout()">О немощах сего инструмента</span>
 </div>
 
 <script>
-// ════════════════════════════════════════════════════
-// НАСТРОЙКА — замените URL на адрес вашего воркера
-// ════════════════════════════════════════════════════
-var WORKER_URL = 'https://vpn4ios.gsm1965.workers.dev';
+var WORKER_URL = 'https://vpn4ios-dev.gsm1965.workers.dev';
 
-// ─── Состояние ───────────────────────────────────────
 var sessionToken   = null;
 var modalCallback  = null;
 var HIST_KEY       = 'sbogom_history';
@@ -248,8 +231,8 @@ var BG_KEY         = 'sbogom_bg';
 var BG_COUNT       = 10;   // файлы 0.jpg … 9.jpg рядом с index.html
 var bgIndex        = -1;   // -1 = белый
 var crossClicked   = false;
+var debugMode      = false;
 
-// ─── Инициализация ───────────────────────────────────
 window.onload = function() {
   loadBg();
   pingWorker();
@@ -266,7 +249,6 @@ if (window.addEventListener) {
   });
 }
 
-// ─── Экраны ──────────────────────────────────────────
 function showScreen(name) {
   var all = document.querySelectorAll('.screen');
   for (var i = 0; i < all.length; i++) {
@@ -276,7 +258,6 @@ function showScreen(name) {
   if (s) { s.className += ' active'; }
 }
 
-// ─── Фон (пергамент) ─────────────────────────────────
 function loadBg() {
   var v = localStorage.getItem(BG_KEY);
   bgIndex = (v !== null && v !== '') ? parseInt(v, 10) : 1;
@@ -312,7 +293,6 @@ function checkBgOrientation() {
   img.className = (imgPortrait !== scrPortrait) ? 'rotated' : '';
 }
 
-// ─── Модальное окно ──────────────────────────────────
 function showModal(text, cb) {
   document.getElementById('modal-msg').innerHTML = text;
   document.getElementById('modal-overlay').className = 'vis';
@@ -351,7 +331,6 @@ function doXhr(method, url, data, cb) {
   x.send(data || null);
 }
 
-// ─── Пинг воркера ────────────────────────────────────
 function pingWorker() {
   doXhr('GET', WORKER_URL + '?action=ping', null, function(err, data) {
     if (err || !data || !data.ok) {
@@ -366,7 +345,6 @@ function pingWorker() {
   });
 }
 
-// ─── Авторизация ─────────────────────────────────────
 function normalizePhrase(s) {
   return s.toLowerCase()
     .replace(/\u0451/g, '\u0435') // ё → е
@@ -433,7 +411,6 @@ document.getElementById('pass-input').onkeydown = function(e) {
   if ((e.keyCode || e.which) === 13) { submitPass(); }
 };
 
-// ─── История ─────────────────────────────────────────
 var PINNED = [
   'http://pravoslavie.ru',
   'http://www.pravmir.ru',
@@ -501,7 +478,10 @@ function makeHistItem(url, idx) {
   span.className = 'hist-url';
   span.textContent = url.replace(/^https?:\/\//, '');
   (function(u) {
-    span.onclick = function() { navigateTo(u); };
+    span.onclick = function(e) {
+      if (e && e.ctrlKey && e.altKey && e.shiftKey) { debugMode = true; }
+      navigateTo(u);
+    };
   })(url);
   div.appendChild(span);
 
@@ -521,7 +501,6 @@ function makeHistItem(url, idx) {
   return div;
 }
 
-// ─── Навигация ───────────────────────────────────────
 function normalizeUrl(u) {
   u = (u || '').trim();
   if (!u) { u = PINNED[0]; }
@@ -531,7 +510,8 @@ function normalizeUrl(u) {
   return u;
 }
 
-function goToUrl() {
+function goToUrl(evt) {
+  debugMode = !!(evt && evt.ctrlKey && evt.altKey && evt.shiftKey);
   var raw = document.getElementById('url-input').value.trim();
   navigateTo(normalizeUrl(raw));
 }
@@ -544,12 +524,13 @@ function navigateTo(url) {
   }
   url = normalizeUrl(url);
   addToHistory(url);
-  // Скрываем историю немедленно
   renderHistory(false);
 
   var dest = WORKER_URL +
     '?url=' + encodeURIComponent(url) +
-    '&session=' + encodeURIComponent(sessionToken);
+    '&session=' + encodeURIComponent(sessionToken) +
+    (debugMode ? '&debug=1' : '');
+  debugMode = false;
   window.location.href = dest;
 }
 
@@ -558,7 +539,6 @@ document.getElementById('url-input').onkeydown = function(e) {
   if ((e.keyCode || e.which) === 13) { goToUrl(); }
 };
 
-// ─── О немощах ───────────────────────────────────────
 function showAbout() {
   showModal(
     'Сайт откроется и читать его можно будет. ' +
